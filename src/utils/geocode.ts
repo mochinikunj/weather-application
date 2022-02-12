@@ -1,12 +1,13 @@
+
 const request = require('postman-request');
 
-const geocode = (address, callback) => {
+const geocode = (address: any, callback: any) => {
     const place = encodeURIComponent(address);
 
     const apiKey = process.env.geocode_API_KEY;
     const apiURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${place}.json?access_token=${apiKey}&limit=1`;
     
-    request({ url: apiURL, json: true }, (err, { body }) => {
+    request({ url: apiURL, json: true }, (err: string, { body }: any) => {
         if (err) {
             callback('Unable to connect to geocoding service!', undefined);
         } else if (body.features.length === 0) {
@@ -21,4 +22,4 @@ const geocode = (address, callback) => {
     });
 };
 
-module.exports = geocode;
+export { geocode };

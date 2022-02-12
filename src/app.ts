@@ -1,12 +1,12 @@
-const path = require('path');
-const express = require('express');
-const hbs = require('hbs');
-const geocode = require('./utils/geocode');
-const forecast = require('./utils/forecast');
+import path from 'path';
+import express, { Application, request, response } from 'express';
+import hbs from 'hbs';
+import { geocode } from './utils/geocode';
+import { forecast } from './utils/forecast';
 
 require('dotenv').config();
 
-const app = express();
+const app: Application = express();
 const port = process.env.PORT || 5000;
 
 // Define paths for Express config
@@ -58,12 +58,12 @@ app.get('/weather', (req, res) => {
         return res.send({ error: 'Please enter location' });
     }
     
-    geocode(req.query.address, (err, { latitude, longitude, location } = {}) => {
+    geocode(req.query.address, (err: string, { latitude, longitude, location }: any = {}) => {
         if (err) {
             return res.send({ error: err });
         }
         
-        forecast(latitude, longitude, (err, forecast) => {
+        forecast(latitude, longitude, (err: string, forecast: string) => {
             if (err) {
                 return res.send({ error: err });
             }
